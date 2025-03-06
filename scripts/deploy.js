@@ -81,37 +81,37 @@ async function main() {
     const token0Amt = ethers.parseEther("500");
     const token1Amt = ethers.parseUnits("500", 6);
 
-    // const deadline = Math.floor(Date.now() / 1000 + (60 * 5)); // unix timestamp of current + 5 min
-    // const addLiquidityTxn = await Router.connect(owner).addLiquidity(
-    //     ACAddress,
-    //     USDCAddress,
-    //     token0Amt,
-    //     token1Amt,
-    //     1,
-    //     1,
-    //     owner.address,
-    //     deadline, {
-    //         gasLimit: '1000000'
-    //     }
-    // );
+    const deadline = Math.floor(Date.now() / 1000 + (60 * 5)); // unix timestamp of current + 5 min
+    const addLiquidityTxn = await Router.connect(owner).addLiquidity(
+        ACAddress,
+        USDCAddress,
+        token0Amt,
+        token1Amt,
+        1,
+        1,
+        owner.address,
+        deadline, {
+            gasLimit: '1000000'
+        }
+    );
 
-    // addLiquidityTxn.wait();
-    // const token0Address = await firstPair.token0();
-    // const isToken0AC = token0Address == ACAddress;
-    // console.log("Token 0 is " + (isToken0AC ? "AC and Token 1 is USDC" : "USDC and Token 1 is AC"));
+    addLiquidityTxn.wait();
+    const token0Address = await firstPair.token0();
+    const isToken0AC = token0Address == ACAddress;
+    console.log("Token 0 is " + (isToken0AC ? "AC and Token 1 is USDC" : "USDC and Token 1 is AC"));
 
-    // firstPairReserves = await firstPair.getReserves();
-    // console.log("Reserves after adding liquidity: ", firstPairReserves);
-    // console.log("AC/USDC: ", isToken0AC ? (ethers.formatUnits(firstPairReserves[1], 6) / ethers.formatEther(firstPairReserves[0])) : ethers.formatUnits(firstPairReserves[0], 6) / (ethers.formatEther(firstPairReserves[1])));
+    firstPairReserves = await firstPair.getReserves();
+    console.log("Reserves after adding liquidity: ", firstPairReserves);
+    console.log("AC/USDC: ", isToken0AC ? (ethers.formatUnits(firstPairReserves[1], 6) / ethers.formatEther(firstPairReserves[0])) : ethers.formatUnits(firstPairReserves[0], 6) / (ethers.formatEther(firstPairReserves[1])));
 
-    // const USDCAmtIn = '100';
-    // const estAmountOut = (await Router.getAmountsOut(ethers.parseUnits(USDCAmtIn, 6), [USDCAddress, ACAddress]))[1];
-    // console.log("Estimated AC received for " + USDCAmtIn + "USDC", ethers.formatEther(estAmountOut));
+    const USDCAmtIn = '100';
+    const estAmountOut = (await Router.getAmountsOut(ethers.parseUnits(USDCAmtIn, 6), [USDCAddress, ACAddress]))[1];
+    console.log("Estimated AC received for " + USDCAmtIn + "USDC", ethers.formatEther(estAmountOut));
 
-    // await Router.connect(owner).swapExactTokensForTokens(ethers.parseUnits(USDCAmtIn, 6), estAmountOut, [USDCAddress, ACAddress], owner, deadline);
-    // firstPairReserves = await firstPair.getReserves();
-    // console.log("Reserves after swapping: ", firstPairReserves);
-    // console.log("AC/USDC: ", isToken0AC ? (ethers.formatUnits(firstPairReserves[1], 6) / ethers.formatEther(firstPairReserves[0])) : ethers.formatUnits(firstPairReserves[0], 6) / (ethers.formatEther(firstPairReserves[1])));
+    await Router.connect(owner).swapExactTokensForTokens(ethers.parseUnits(USDCAmtIn, 6), estAmountOut, [USDCAddress, ACAddress], owner, deadline);
+    firstPairReserves = await firstPair.getReserves();
+    console.log("Reserves after swapping: ", firstPairReserves);
+    console.log("AC/USDC: ", isToken0AC ? (ethers.formatUnits(firstPairReserves[1], 6) / ethers.formatEther(firstPairReserves[0])) : ethers.formatUnits(firstPairReserves[0], 6) / (ethers.formatEther(firstPairReserves[1])));
 
 
 }
